@@ -24,7 +24,7 @@ function call1($arg) {
 call1(2);
 ```
 
-```php
+```bash
 php8trace -d observer.instrument_dump_execute_data_ptr=0 b.php
 
 starting php process with pid [ 115549 ]
@@ -41,4 +41,18 @@ starting php process with pid [ 115549 ]
 To try
 --------------------
 
+```bash
 make install
+php8trace script.php
+```
+
+interesting keyboard shortcut:
+  - Control + c: forward SIGINT
+  - Control + s: defaut XOFF behavior
+  - Control + q: forward XON behiavor
+  - Control + z: forward SIGSTOP
+  - Control + w: forward sigcont
+
+  - Control + y: toggle silent mode - make script run quicker
+  - Control + u toggle argument / return value pretty dump - make script run quicker
+
