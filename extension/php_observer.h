@@ -12,6 +12,9 @@ ZEND_TSRMLS_CACHE_EXTERN()
 
 ZEND_BEGIN_MODULE_GLOBALS(observer)
 	int instrument;
+	int instrument_dump_arguments;
+	int instrument_dump_timing;
+	int instrument_dump_execute_data_ptr;
 ZEND_END_MODULE_GLOBALS(observer)
 
 #ifdef ZTS
