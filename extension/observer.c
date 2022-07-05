@@ -235,7 +235,7 @@ static void observer_end(zend_execute_data *execute_data, zval *return_value) {
 			pp_return_value = zend_zval_type_name(return_value);
 		}
 
-		fprintf(stderr, "%*s %s: %s (%f)", indent+1, "<",
+		fprintf(stderr, "%*s %s: %s", indent+1, "<",
 				dump_call_trace(execute_data),
 				return_value ? pp_return_value: "null",
 				pp_return_value);
@@ -245,7 +245,7 @@ static void observer_end(zend_execute_data *execute_data, zval *return_value) {
     }
 
 		if (OBSERVER_G(instrument_dump_timing)) {
-      fprintf(stderr, " (%f)\n", time_taken);
+      fprintf(stderr, " (%f)", time_taken);
     }
 
     fprintf(stderr, "\n");
