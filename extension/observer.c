@@ -85,7 +85,7 @@ again:
 					if (key) {
 						new_offset = snprintf(buf[limit]+offset, blen, "%s => %s,", ZSTR_VAL(key), dump_zval(val, limit-1));
 					} else {
-						new_offset = snprintf(buf[limit]+offset, blen, "%d => %s,", index, dump_zval(val, limit-1));
+						new_offset = snprintf(buf[limit]+offset, blen, "%ld => %s,", index, dump_zval(val, limit-1));
 					}
 					offset += new_offset;
 					blen -= new_offset;
@@ -99,7 +99,7 @@ again:
 				return buf[limit];
 			case IS_RESOURCE:
 				tstr = (char *) zend_rsrc_list_get_rsrc_type(Z_RES_P(zv));
-				snprintf(buf[limit]+offset, blen, "{%s}#%d", tstr?tstr:"Unknown", Z_RES_P(zv)->handle);
+				snprintf(buf[limit]+offset, blen, "{%s}#%ld", tstr?tstr:"Unknown", Z_RES_P(zv)->handle);
 				return buf[limit];
 			case IS_UNDEF:
 				return "{undef}";
@@ -121,7 +121,6 @@ char *dump_call_trace(zend_execute_data *execute_data) {
 
 	zend_object *object;
 	zend_function *func;
-
 
 	object = (Z_TYPE(execute_data->This) == IS_OBJECT) ? Z_OBJ(execute_data->This) : NULL;
 
@@ -200,10 +199,10 @@ static void observer_begin(zend_execute_data *execute_data) {
 		fprintf(stderr, "%*s %s", indent+1, ">", dump_call_trace(execute_data));
 
 		if (OBSERVER_G(instrument_dump_execute_data_ptr)) {
-      fprintf(stderr, " 0x%" PRIXPTR, (uintptr_t)execute_data);
-    }
+			fprintf(stderr, " 0x%" PRIXPTR, (uintptr_t)execute_data);
+		}
 
-    fprintf(stderr, "\n");
+		fprintf(stderr, "\n");
 
 		int absent;
 		khint_t k;
@@ -237,18 +236,17 @@ static void observer_end(zend_execute_data *execute_data, zval *return_value) {
 
 		fprintf(stderr, "%*s %s: %s", indent+1, "<",
 				dump_call_trace(execute_data),
-				return_value ? pp_return_value: "null",
 				pp_return_value);
 
 		if (OBSERVER_G(instrument_dump_execute_data_ptr)) {
-      fprintf(stderr, " 0x%" PRIXPTR, (uintptr_t)execute_data);
-    }
+			fprintf(stderr, " 0x%" PRIXPTR, (uintptr_t)execute_data);
+		}
 
 		if (OBSERVER_G(instrument_dump_timing)) {
-      fprintf(stderr, " (%f)", time_taken);
-    }
+			fprintf(stderr, " (%f)", time_taken);
+		}
 
-    fprintf(stderr, "\n");
+		fprintf(stderr, "\n");
 	}
 }
 
